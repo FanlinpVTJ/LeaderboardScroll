@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-internal interface IGuildIconProvider
+public interface IGuildIconProvider
 {
     public Sprite GetGuildTierIcon(int guildTier);
 

@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b0f261c6c494fb0a37e1900d3168b22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerInfoJsonFile: {fileID: 4900000, guid: f89f2d92011243f6b3e05c25ab921a24, type: 3}
+  _loadingDelayMilliseconds: 1500
 --- !u!1 &4641003879242913514
 GameObject:
   m_ObjectHideFlags: 0
@@ -75,6 +77,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 324146957920293709}
+  - {fileID: 7054078887667962201}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7883975760327525871
@@ -90,7 +93,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
-  _monoInstallers: []
+  _monoInstallers:
+  - {fileID: 565999668666991470}
+  - {fileID: 4874816114986003165}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 1
   _editorReflectionBakingCoverageMode: 0
@@ -105,3 +110,50 @@ MonoBehaviour:
       _missingHandlerDefaultResponse: 2
       _requireStrictUnsubscribe: 0
       _defaultAsyncTickPriority: 1
+--- !u!1 &6758982427626759900
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7054078887667962201}
+  - component: {fileID: 4874816114986003165}
+  m_Layer: 0
+  m_Name: IconProviders
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7054078887667962201
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6758982427626759900}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7769233478184537214}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4874816114986003165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6758982427626759900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9b4fb57163ca0a4c9c13a6e37c84a02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tierIconProvider: {fileID: 11400000, guid: 983017a9a438e2242aa648b8174b2bf9, type: 2}
+  _positionIconProvider: {fileID: 11400000, guid: e60731aac2188674a82c72870a32efbe, type: 2}
+  _guildIconProvider: {fileID: 11400000, guid: 4e99bfbc1388783429a77434cb54461a, type: 2}

@@ -1,17 +1,9 @@
+using System.Collections.Generic;
 using TMPro;
+using SmartScroll;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
-
-public class PlayerInfoPayload
-{
-    public string Id;
-    public int Position;
-    public int Level;
-    public string Name;
-    public int Score;
-    public int GuildTier;
-}
 
 public class LeaderboardElement : MonoBehaviour
 {
@@ -24,12 +16,27 @@ public class LeaderboardElement : MonoBehaviour
     [SerializeField] private Image _guildTierIcon;
     [SerializeField] private TextMeshProUGUI _guildTierText;
 
+    private SmartScrollElement _smartScrollElement;
+
     [Inject]
     private ITierIconProvider _tierIconProvider;
     [Inject]
     private IPositionIconProvider _positionIconProvider;
     [Inject]
     private IGuildIconProvider _guildTierIconProvider;
+    [Inject]
+    private ILeaderboardPlayerListProvider _leaderboardPlayerListProvider;
+
+    private void Awake()
+    {
+        _smartScrollElement = GetComponent<SmartScrollElement>();
+        _smartScrollElement.OnDataUpdated += UpdateElement;
+    }
+
+    private void OnDestroy()
+    {
+        _smartScrollElement.OnDataUpdated -= UpdateElement;
+    }
 
     public void SetupElement(PlayerInfoPayload payload)
     {
@@ -45,5 +52,12 @@ public class LeaderboardElement : MonoBehaviour
 
         _guildTierIcon.sprite = _guildTierIconProvider.GetGuildTierIcon(payload.GuildTier);
         _guildTierText.text = payload.GuildTier.ToString();
+    }
+
+    private void UpdateElement()
+    {
+        PlayerInfoPayload payload = _leaderboardPlayerListProvider.GetPlayerInfoPayload(_smartScrollElement.Data.Index);
+
+        SetupElement(payload);
     }
 }
