@@ -17,6 +17,8 @@ Code style = contract. If instructions conflict, the code style wins.
 ## 🚫 Forbidden actions
 - **Git commits**: The agent does NOT make commits. Only the user.
 - **Running tests**: The agent does NOT run and does NOT plan to run tests without an explicit request.
+- **Project build by default**: The agent must NOT run a full project build unless the user explicitly requests it.
+- **Null checks by default**: The agent must NOT add `null` checks unless `null` is an expected and valid state by the logic.
 
 ---
 
@@ -25,7 +27,7 @@ Code style = contract. If instructions conflict, the code style wins.
 2) Work only within the task (do not do "helpful" refactors without a request).
 3) Follow the project architecture and existing patterns.
 4) After changes:
-   - ensure the code compiles
+   - check for compilation errors without running a full project build
    - do not add extra files/entities
    - do not change public APIs unless necessary
 
