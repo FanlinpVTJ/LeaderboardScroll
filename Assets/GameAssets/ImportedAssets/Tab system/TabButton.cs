@@ -33,6 +33,8 @@ namespace TabSystem
         {
             CheckSequence();
 
+            _btn.interactable = _isActiveTab;
+
             _isSelectedTab = isSelected;
 
             if (isSelected)
@@ -70,7 +72,7 @@ namespace TabSystem
                     .Pause();
 
                 _sequence
-                    .Append(_lockedtabIcon.rectTransform.DOAnchorPosY(_animationSettings.SelectedTabYPosition, 0.15f).SetEase(Ease.Linear));
+                    .Append(_rectTransform.DOAnchorPosY(_animationSettings.SelectedTabYPosition, 0.15f).SetEase(Ease.Linear));
             }
         }
 
@@ -86,6 +88,7 @@ namespace TabSystem
         {
             _back.sprite = _visualSettings.GetBackgroundSprite(_isActiveTab, isSelected);
             _lockedtabIcon.gameObject.SetActive(!_isActiveTab);
+            _text.SetActive(_isActiveTab);
         }
 
         private void SetObjectsActive(bool isSelected)
