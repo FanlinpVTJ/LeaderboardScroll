@@ -28,6 +28,7 @@ Code style = contract. If instructions conflict, the code style wins.
 3) Follow the project architecture and existing patterns.
 4) After changes:
    - check for compilation errors without running a full project build
+   - ignore `dotnet build` / `.csproj` errors caused by missing Unity-generated DLLs from `Temp/bin/Debug` if the user confirmed they are not relevant for this project environment
    - do not add extra files/entities
    - do not change public APIs unless necessary
 
