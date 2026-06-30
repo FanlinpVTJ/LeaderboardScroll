@@ -7,6 +7,8 @@ public interface ILeaderboardPlayerListProvider
 
     public PlayerInfoPayload GetPlayerInfoPayload(int index);
 
+    public int GetPlayerIndex(string playerId);
+
     public UniTask<List<PlayerInfoPayload>> LoadPlayerInfoListAsync();
 
     public void SetPlayerInfoList(List<PlayerInfoPayload> playerInfoList);

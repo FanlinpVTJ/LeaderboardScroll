@@ -26,6 +26,19 @@ public class LeaderboardPlayerListProvider : ILeaderboardPlayerListProvider
         return _playerInfoList[index];
     }
 
+    public int GetPlayerIndex(string playerId)
+    {
+        for (int i = 0; i < _playerInfoList.Count; i++)
+        {
+            if (_playerInfoList[i].Id == playerId)
+            {
+                return i;
+            }
+        }
+
+        throw new KeyNotFoundException($"Player with id {playerId} was not found in leaderboard.");
+    }
+
     public async UniTask<List<PlayerInfoPayload>> LoadPlayerInfoListAsync()
     {
         await UniTask.Delay(_loadingDelayMilliseconds);
