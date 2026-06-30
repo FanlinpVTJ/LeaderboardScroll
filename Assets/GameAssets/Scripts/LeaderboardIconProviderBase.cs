@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class LeaderboardIconProviderBase : ScriptableObject
 {
     [SerializeField] private List<LeaderboardIconMapping> _iconMappings;
-
+    [SerializeField] private Sprite _defaultIcon;
     protected Sprite GetIcon(int id)
     {
         for (int i = 0; i < _iconMappings.Count; i++)
@@ -16,6 +15,6 @@ public abstract class LeaderboardIconProviderBase : ScriptableObject
             }
         }
 
-        throw new ArgumentOutOfRangeException(nameof(id), id, $"Icon mapping does not contain icon for id {id}.");
+        return _defaultIcon;
     }
 }

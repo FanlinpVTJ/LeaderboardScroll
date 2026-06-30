@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 627b9e81c6e1dc54f8e35f19178aa752, type: 3}
   m_Name: Tier Icon Provider
   m_EditorClassIdentifier: 
-  _iconMappings:
-  - Id: 0
-    Icon: {fileID: 0}
+  _iconMappings: []
+  _defaultIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
