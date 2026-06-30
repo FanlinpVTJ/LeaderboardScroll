@@ -22,6 +22,7 @@ public class LeaderboardWindow : Window
     private RectTransform _viewportRectTransform;
     private LeaderboardElement _currentPlayerLeaderboardElement;
     private RectTransform _currentPlayerLeaderboardElementRectTransform;
+    private Button _currentPlayerLeaderboardElementButton;
 
     [Inject] private IInstantiator _instantiator;
     [Inject] private ILeaderboardPlayerListProvider _leaderboardPlayerListProvider;
@@ -39,6 +40,11 @@ public class LeaderboardWindow : Window
 
     private void OnDestroy()
     {
+        if (_currentPlayerLeaderboardElementButton != null)
+        {
+            _currentPlayerLeaderboardElementButton.onClick.RemoveListener(OnCurrentPlayerLeaderboardElementClicked);
+        }
+
         _scrollRect.onValueChanged.RemoveListener(OnScrollValueChanged);
     }
 
@@ -101,6 +107,15 @@ public class LeaderboardWindow : Window
 
         _currentPlayerLeaderboardElement = _instantiator.InstantiatePrefabForComponent<LeaderboardElement>(_currentPlayerLeaderboardElementPrefab, _currentPlayerLeaderboardElementParent);
         _currentPlayerLeaderboardElementRectTransform = (RectTransform)_currentPlayerLeaderboardElement.transform;
+        _currentPlayerLeaderboardElementButton = _currentPlayerLeaderboardElement.GetComponent<Button>();
+
+        if (_currentPlayerLeaderboardElementButton == null)
+        {
+            _currentPlayerLeaderboardElementButton = _currentPlayerLeaderboardElement.gameObject.AddComponent<Button>();
+            _currentPlayerLeaderboardElementButton.transition = Selectable.Transition.None;
+        }
+
+        _currentPlayerLeaderboardElementButton.onClick.AddListener(OnCurrentPlayerLeaderboardElementClicked);
         _currentPlayerLeaderboardElementRectTransform.anchorMin = new Vector2(0f, 1f);
         _currentPlayerLeaderboardElementRectTransform.anchorMax = new Vector2(0f, 1f);
         _currentPlayerLeaderboardElementRectTransform.pivot = new Vector2(0.5f, 0.5f);
@@ -155,6 +170,8 @@ public class LeaderboardWindow : Window
 
     private void ScrollToCurrentPlayer()
     {
+        _scrollRect.StopMovement();
+
         float viewportHeight = _viewportRectTransform.rect.height;
         float currentPlayerSourceHeight = _currentPlayerLeaderboardElementRectSource.rect.height;
         float currentPlayerTopPosition = _smartScrollView.GetElementPosition(_currentPlayerIndex, false);
@@ -164,5 +181,17 @@ public class LeaderboardWindow : Window
         float offset = centeredContentPositionY - defaultContentPositionY;
 
         _smartScrollView.ScrollToElement(_currentPlayerIndex, offset);
+        _scrollRect.StopMovement();
+    }
+
+    private void OnCurrentPlayerLeaderboardElementClicked()
+    {
+        if (_currentPlayerIndex < 0)
+        {
+            return;
+        }
+
+        ScrollToCurrentPlayer();
+        UpdateCurrentPlayerLeaderboardElementPosition();
     }
 }
