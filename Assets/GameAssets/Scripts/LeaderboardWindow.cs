@@ -11,7 +11,9 @@ public class LeaderboardWindow : Window
     [SerializeField] private SmartScrollViewDirectional _smartScrollView;
     [SerializeField] private RectTransform _viewport;
     [SerializeField] private LeaderboardElement _currentPlayerLeaderboardElementPrefab;
+    [SerializeField] private Transform _currentPlayerLeaderboardElementParent;
     [SerializeField] private RectTransform _currentPlayerLeaderboardElementRectSource;
+    [SerializeField] private GameObject _loaderHolder;
 
     private int _loadVersion;
     private int _currentPlayerIndex = -1;
@@ -21,7 +23,7 @@ public class LeaderboardWindow : Window
     private LeaderboardElement _currentPlayerLeaderboardElement;
     private RectTransform _currentPlayerLeaderboardElementRectTransform;
 
-    [Inject] private DiContainer _container;
+    [Inject] private IInstantiator _instantiator;
     [Inject] private ILeaderboardPlayerListProvider _leaderboardPlayerListProvider;
     [Inject] private ICurrentPlayerProfileProvider _currentPlayerProfileProvider;
 
@@ -58,6 +60,7 @@ public class LeaderboardWindow : Window
 
     private async UniTaskVoid LoadLeaderboardAsync(int loadVersion)
     {
+        _loaderHolder.SetActive(true);
         _smartScrollView.Clear();
         HideCurrentPlayerLeaderboardElement();
 
@@ -67,6 +70,8 @@ public class LeaderboardWindow : Window
         {
             return;
         }
+
+        _loaderHolder.SetActive(false);
 
         _currentPlayerIndex = _leaderboardPlayerListProvider.GetPlayerIndex(_currentPlayerProfileProvider.GetCurrentPlayerId());
         _smartScrollView.CreateElements(playerInfoList.Count);
@@ -94,7 +99,7 @@ public class LeaderboardWindow : Window
             return;
         }
 
-        _currentPlayerLeaderboardElement = _container.InstantiatePrefabForComponent<LeaderboardElement>(_currentPlayerLeaderboardElementPrefab, _viewportRectTransform);
+        _currentPlayerLeaderboardElement = _instantiator.InstantiatePrefabForComponent<LeaderboardElement>(_currentPlayerLeaderboardElementPrefab, _currentPlayerLeaderboardElementParent);
         _currentPlayerLeaderboardElementRectTransform = (RectTransform)_currentPlayerLeaderboardElement.transform;
         _currentPlayerLeaderboardElementRectTransform.anchorMin = new Vector2(0f, 1f);
         _currentPlayerLeaderboardElementRectTransform.anchorMax = new Vector2(0f, 1f);

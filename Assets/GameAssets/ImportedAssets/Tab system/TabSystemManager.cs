@@ -10,10 +10,7 @@ namespace TabSystem
 
         private void Start()
         {
-            if (_defaultTab != null)
-            {
-                SetTab(_defaultTab);
-            }
+            ActivateDefaultButton();
         }
 
         public void SetTab(TabButton tab)
@@ -23,6 +20,14 @@ namespace TabSystem
                 if (!t) continue;
 
                 t.SetActive(t == tab && t.IsActiveTab);
+            }
+        }
+
+        public void ActivateDefaultButton()
+        {
+            if (_defaultTab != null)
+            {
+                SetTab(_defaultTab);
             }
         }
     }
